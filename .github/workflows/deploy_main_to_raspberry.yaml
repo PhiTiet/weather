@@ -22,9 +22,7 @@ jobs:
           distribution: 'adopt'
           java-version: '21'
       - name: Set up Docker Buildx
-        run: |
-          docker buildx create --use
-          docker buildx inspect --bootstrap
+        uses: docker/setup-buildx-action@v3
 
       - name: build_with_maven
         run: mvn clean package
@@ -36,9 +34,16 @@ jobs:
           username: ${{github.repository_owner}}
           password: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Build and Push image
-        run: |
-          docker buildx build \
-            --platform linux/arm64 \
-            --tag ghcr.io/phitiet/weather:latest \
-            --push .
+      - name: Build the app image
+        uses: docker/build-push-action@v4
+        with:
+            push: true
+            context: .
+            platforms: linux/arm64
+            tags: ghcr.io/phitiet/weather:latest
+            secrets: |
+              "EMAIL_DAILY_UPDATE=${{ secrets.EMAIL_DAILY_UPDATE }}"
+              "EMAIL_SWIMMING_UPDATE=${{ secrets.EMAIL_SWIMMING_UPDATE }}"
+              "DISCORD_WEBHOOK_URL=${{ secrets.DISCORD_WEBHOOK_URL }}"
+              "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}"
+              "MAIL_PASSWORD=${{ secrets.MAIL_PASSWORD }}"
