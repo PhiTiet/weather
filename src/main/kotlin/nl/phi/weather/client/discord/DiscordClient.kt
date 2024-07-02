@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod.POST
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.http.ResponseEntity
-import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 
@@ -31,11 +30,5 @@ class DiscordClient(
 
         println("Response: ${response.statusCode} - ${response.body}")
         return response.statusCode
-    }
-
-    @Scheduled(initialDelay = 60 * 1000)
-    fun sendStartup(){
-        println("Sending startup message to: ${url}" )
-        postMessage("Startup completed")
     }
 }
