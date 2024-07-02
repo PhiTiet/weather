@@ -1,0 +1,17 @@
+server.port: 8082
+
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: ${MAIL_USERNAME}
+  password: ${MAIL_PASSWORD}
+  properties.mail.smtp:
+    auth: true
+    starttls.enable: true
+
+discord:
+  webhook:
+    url: ${DISCORD_WEBHOOK_URL}
+email:
+  daily.update: ${EMAIL_DAILY_UPDATE}
+  swimming.update: ${EMAIL_SWIMMING_UPDATE}
