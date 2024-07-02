@@ -7,16 +7,17 @@ on:
 
 jobs:
   build:
-    timeout-minutes: 6
+    timeout-minutes: 3
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: checkout_code
+        uses: actions/checkout@v4
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: 'adopt'
           java-version: '21'
-      - name: Set up Docker Buildx
+      - name: setup_docker_buildx
         uses: docker/setup-buildx-action@v3
 
       - name: build_with_maven
@@ -29,7 +30,7 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build the app image
+      - name: build_and_push_image
         uses: docker/build-push-action@v4
         with:
           push: true
