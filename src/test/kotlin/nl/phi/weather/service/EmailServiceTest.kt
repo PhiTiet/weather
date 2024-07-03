@@ -9,7 +9,6 @@ import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 
 class EmailServiceTest {
-
     private val mailSender: JavaMailSender = mock()
     private val dailyUpdateEmail = "daily@example.com"
     private val swimmingUpdateEmails = listOf("swimming1@example.com", "swimming2@example.com")
