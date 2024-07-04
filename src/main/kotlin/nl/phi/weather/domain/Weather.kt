@@ -6,7 +6,7 @@ data class Weather(
     private val windSpeed: Double,
     private val windDirection: String
 ) {
-    fun isSwimmingWeather(): Boolean = weatherType.isSwimmingWeatherType() && temperature > 15.0
+    fun isSwimmingWeather(): Boolean = weatherType.isSwimmingWeatherType() and (temperature > 15.0)
 
     fun getWeatherReport(): String {
         return "Good morning, \n" +

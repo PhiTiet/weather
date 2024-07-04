@@ -39,6 +39,6 @@ enum class WeatherType(val code: Int, val description: String) {
     }
 
     fun isSwimmingWeatherType(): Boolean {
-        return this == MAINLY_CLEAR || this == PARTLY_CLOUDY ||  this == CLEAR_SKY
+        return (this == MAINLY_CLEAR) or (this == PARTLY_CLOUDY) or  (this == CLEAR_SKY)
     }
 }
