@@ -15,8 +15,10 @@ class FromRawWeatherResponseMapper {
         return Weather(
             weatherType = checkNotNull(currentWeather.weatherCode?.let { WeatherType.fromCode(it) })
             { "Weather code is missing" },
-            temperature = checkNotNull(currentWeather.temperature) { "Temperature is missing" },
-            windSpeed = checkNotNull(currentWeather.windSpeed) { "Windspeed is missing" },
+            temperature = checkNotNull(currentWeather.temperature)
+            { "Temperature is missing" },
+            windSpeed = checkNotNull(currentWeather.windSpeed)
+            { "Windspeed is missing" },
             windDirection = checkNotNull(currentWeather.windDirection?.toDouble()?.let { degreesToCompassDirection(it)})
             { "Wind direction is missing" }
         )
