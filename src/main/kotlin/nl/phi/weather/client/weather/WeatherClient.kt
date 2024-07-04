@@ -26,7 +26,8 @@ class WeatherClient(private val restTemplate: RestTemplate) {
             .queryParam("current_weather", true)
             .toUriString()
 
-        val response = checkNotNull( restTemplate.getForObject(uri, RawWeatherResponse::class.java)) {"Failed to fetch weather data"}
+        val response = checkNotNull( restTemplate.getForObject(uri, RawWeatherResponse::class.java))
+        {"Failed to fetch weather data"}
 
         return fromRawWeatherResponseMapper.map(response)
     }
