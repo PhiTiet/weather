@@ -11,15 +11,16 @@ class FromRawWeatherResponseMapper {
         rawWeatherResponse.currentWeatherUnits?.let { assertCorrectUnits(it) }
         val currentWeather = rawWeatherResponse.currentWeather
             ?: throw RuntimeException("Current weather data is missing")
+        val (weatherCode, temperature, windSpeed, windDirection) = currentWeather
 
         return Weather(
-            weatherType = currentWeather.weathercode?.let { WeatherType.fromCode(it) }
+            weatherType = weatherCode?.let { WeatherType.fromCode(it) }
                 ?: throw RuntimeException("Weather code is missing"),
-            temperature = currentWeather.temperature
+            temperature = temperature
                 ?: throw RuntimeException("Temperature is missing"),
-            windSpeed = currentWeather.windspeed
+            windSpeed = windSpeed
                 ?: throw RuntimeException("Windspeed is missing"),
-            windDirection = currentWeather.winddirection?.toDouble()?.let { degreesToCompassDirection(it) }
+            windDirection = windDirection?.toDouble()?.let { degreesToCompassDirection(it) }
                 ?: throw RuntimeException("Wind direction is missing")
         )
     }
