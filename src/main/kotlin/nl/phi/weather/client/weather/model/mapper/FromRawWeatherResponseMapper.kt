@@ -10,18 +10,14 @@ class FromRawWeatherResponseMapper {
     fun map(rawWeatherResponse: RawWeatherResponse): Weather {
         rawWeatherResponse.currentWeatherUnits?.let { assertCorrectUnits(it) }
 
-        val currentWeather = checkNotNull(rawWeatherResponse.currentWeather) {
-            "Current weather data is missing"
-        }
+        val currentWeather = checkNotNull(rawWeatherResponse.currentWeather) { "Current weather data is missing" }
 
         return Weather(
             weatherType = checkNotNull(currentWeather.weatherCode?.let { WeatherType.fromCode(it) })
             { "Weather code is missing" },
-            temperature = checkNotNull(currentWeather.temperature)
-            { "Temperature is missing" },
-            windSpeed = checkNotNull(currentWeather.windSpeed)
-            { "Windspeed is missing" },
-            windDirection = checkNotNull(currentWeather.windDirection?.toDouble()?.let { degreesToCompassDirection(it) })
+            temperature = checkNotNull(currentWeather.temperature) { "Temperature is missing" },
+            windSpeed = checkNotNull(currentWeather.windSpeed) { "Windspeed is missing" },
+            windDirection = checkNotNull(currentWeather.windDirection?.toDouble()?.let { degreesToCompassDirection(it)})
             { "Wind direction is missing" }
         )
     }
@@ -34,8 +30,7 @@ class FromRawWeatherResponseMapper {
     }
 
     private fun degreesToCompassDirection(degrees: Double): String {
-        val directions = arrayOf(
-            "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
+        val directions = arrayOf("N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE",
             "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"
         )
         val index = ((degrees / 22.5) + 0.5).toInt() % 16

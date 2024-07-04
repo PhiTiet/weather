@@ -24,9 +24,7 @@ class DiscordClient(
         val payload = mapOf("content" to message)
         val request = HttpEntity(payload, headers)
 
-        val response: ResponseEntity<String> = restTemplate.exchange(
-            url, POST, request, String::class.java
-        )
+        val response: ResponseEntity<String> = restTemplate.exchange(url, POST, request, String::class.java)
 
         println("Response: ${response.statusCode} - ${response.body}")
         return response.statusCode
