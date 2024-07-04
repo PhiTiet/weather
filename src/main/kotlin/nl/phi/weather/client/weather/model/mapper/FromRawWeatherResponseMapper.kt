@@ -9,27 +9,33 @@ class FromRawWeatherResponseMapper {
 
     fun map(rawWeatherResponse: RawWeatherResponse): Weather {
         rawWeatherResponse.currentWeatherUnits?.let { assertCorrectUnits(it) }
-        val currentWeather = rawWeatherResponse.currentWeather
-            ?: throw RuntimeException("Current weather data is missing")
-        val (weatherCode, temperature, windSpeed, windDirection) = currentWeather
+
+        val currentWeather = checkNotNull(rawWeatherResponse.currentWeather) {
+            "Current weather data is missing"
+        }
 
         return Weather(
-            weatherType = weatherCode?.let { WeatherType.fromCode(it) }
-                ?: throw RuntimeException("Weather code is missing"),
-            temperature = temperature
-                ?: throw RuntimeException("Temperature is missing"),
-            windSpeed = windSpeed
-                ?: throw RuntimeException("Windspeed is missing"),
-            windDirection = windDirection?.toDouble()?.let { degreesToCompassDirection(it) }
-                ?: throw RuntimeException("Wind direction is missing")
+            weatherType = checkNotNull(currentWeather.weatherCode?.let { WeatherType.fromCode(it) }) {
+                "Weather code is missing"
+            },
+            temperature = checkNotNull(currentWeather.temperature) {
+                "Temperature is missing"
+            },
+            windSpeed = checkNotNull(currentWeather.windSpeed) {
+                "Windspeed is missing"
+            },
+            windDirection = checkNotNull(currentWeather.windDirection?.toDouble()?.let { degreesToCompassDirection(it) }) {
+                "Wind direction is missing"
+            }
         )
     }
 
     private fun assertCorrectUnits(currentWeatherUnits: CurrentWeatherUnits) {
         require(currentWeatherUnits.temperature == "°C") { "Temperature unit is not °C" }
-        require(currentWeatherUnits.windspeed == "km/h") { "Windspeed unit is not km/h" }
-        require(currentWeatherUnits.weathercode == "wmo code") { "Weather code unit is not wmo code" }
-        require(currentWeatherUnits.winddirection == "°") { "Wind direction unit is not °" } }
+        require(currentWeatherUnits.windSpeed == "km/h") { "Windspeed unit is not km/h" }
+        require(currentWeatherUnits.weatherCode == "wmo code") { "Weather code unit is not wmo code" }
+        require(currentWeatherUnits.windDirection == "°") { "Wind direction unit is not °" }
+    }
 
     private fun degreesToCompassDirection(degrees: Double): String {
         val directions = arrayOf(

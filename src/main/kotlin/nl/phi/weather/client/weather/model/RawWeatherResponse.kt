@@ -12,13 +12,13 @@ data class RawWeatherResponse(
 
 data class CurrentWeatherUnits(
     @JsonProperty("weathercode")
-    val weathercode: String? = null,
+    val weatherCode: String? = null,
 
     @JsonProperty("temperature")
     val temperature: String? = null,
 
     @JsonProperty("windspeed")
-    val windspeed: String? = null,
+    val windSpeed: String? = null,
 
     @JsonProperty("is_day")
     val isDay: String? = null,
@@ -30,18 +30,18 @@ data class CurrentWeatherUnits(
     val time: String? = null,
 
     @JsonProperty("winddirection")
-    val winddirection: String? = null
+    val windDirection: String? = null
 )
 
 data class CurrentWeather(
     @JsonProperty("weathercode")
-    val weathercode: Int? = null,
+    val weatherCode: Int? = null,
 
     @JsonProperty("temperature")
     val temperature: Double? = null,
 
     @JsonProperty("windspeed")
-    val windspeed: Double? = null,
+    val windSpeed: Double? = null,
 
     @JsonProperty("is_day")
     val isDay: Int? = null,
@@ -53,5 +53,5 @@ data class CurrentWeather(
     val time: String? = null,
 
     @JsonProperty("winddirection")
-    val winddirection: Int? = null
+    val windDirection: Int? = null
 )

@@ -15,25 +15,25 @@ class WeatherTestFactory {
 
         fun mockCurrentWeatherUnits(): CurrentWeatherUnits {
             return CurrentWeatherUnits(
-                weathercode = "wmo code",
+                weatherCode = "wmo code",
                 temperature = "°C",
-                windspeed = "km/h",
+                windSpeed = "km/h",
                 isDay = "1",
                 interval = "1",
                 time = "2024-06-24T12:00:00",
-                winddirection = "°"
+                windDirection = "°"
             )
         }
 
         fun mockCurrentWeather(): CurrentWeather {
             return CurrentWeather(
-                weathercode = 1,
+                weatherCode = 1,
                 temperature = 20.0,
-                windspeed = 5.0,
+                windSpeed = 5.0,
                 isDay = 1,
                 interval = 1,
                 time = "2024-06-24T12:00:00",
-                winddirection = 270
+                windDirection = 270
             )
         }
     }
